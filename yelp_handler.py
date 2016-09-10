@@ -31,11 +31,10 @@ def get_restaurants_by_location(location):
 
     if len(restaurants) > config.NUM_RESULTS:
         # Get a random sample of the restaurants that meet the search criteria
-        selected_restaurants = random.sample(list(restaurants), config.NUM_RESULTS)
+        selected_restaurants = random.sample(restaurants.keys(), config.NUM_RESULTS)
         restaurants = {r:restaurants[r] for r in selected_restaurants}
     print restaurants
     return restaurants
-
 
 if __name__ == "__main__":
     get_restaurants_by_location(config.LOCATION)
