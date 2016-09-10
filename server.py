@@ -1,5 +1,6 @@
 import flask
 import config
+import yelp_handler
 
 app = flask.Flask(__name__)
 
@@ -16,6 +17,7 @@ def index():
 
 def get_restaurants_from_yelp(location):
 	# Talk to yelp
+	restaurants = yelp_handler.get_restaurants_by_location(location)
 	return restaurants
 
 @app.route('/slack', methods=['POST'])
