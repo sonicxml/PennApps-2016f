@@ -6,7 +6,7 @@ app = flask.Flask(__name__)
 class InvalidTokenException(Exception):
 	pass
 
-@app.errorhandler(InvalidTokenException):
+@app.errorhandler(InvalidTokenException)
 def handle_invalid_token(error):
 	abort(403)
 
