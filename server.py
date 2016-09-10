@@ -5,36 +5,35 @@ import yelp_handler
 app = flask.Flask(__name__)
 
 class InvalidTokenException(Exception):
-	pass
+    pass
 
 @app.errorhandler(InvalidTokenException)
 def handle_invalid_token(error):
-	abort(403)
+    abort(403)
 
 @app.route('/')
 def index():
     return 'SuperSwagSauce(TM) Productions'
 
 def get_restaurants_from_yelp(location):
-	# Talk to yelp
-	restaurants = yelp_handler.get_restaurants_by_location(location)
-	return restaurants
+    # Talk to yelp
+    restaurants = yelp_handler.get_restaurants_by_location(location)
+    return restaurants
 
 @app.route('/slack', methods=['POST'])
 def generate_response():
-	form_info = flask.request.form
+    form_info = flask.request.form
 
-	if config.API_TOKEN != form_info['token']:
-		raise InvalidTokenException
+    if config.API_TOKEN != form_info['token']:
+        raise InvalidTokenException
 
-	# First, parse args and find the restaurants
-	passed_args = form_info['text']
-	restaurants = get_restaurants_from_yelp(config.LOCATION)
-	# Next, create poll for people to vote on the restaurants
+    # First, parse args and find the restaurants
+    passed_args = form_info['text']
+    restaurants = get_restaurants_from_yelp(config.LOCATION)
+    # Next, create poll for people to vote on the restaurants
 
 def main():
 
 
-
 if __name__ == '__main__':
-	main()
+    main()
