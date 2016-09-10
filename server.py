@@ -3,11 +3,25 @@ import config
 
 app = flask.Flask(__name__)
 
+class InvalidTokenException(Exception):
+	pass
+
+@app.errorhandler(InvalidTokenException):
+def handle_invalid_token(error):
+	abort(403)
+
 @app.route('/')
 def index():
-    return '83'
+    return 'SuperSwagSauce(TM) Productions'
 
-@app.route('/slack', methods=['POST'])
-def get_restaurants_from_yelp():
+def get_restaurants_from_yelp(location):
 	# Talk to yelp
 	return restaurants
+
+@app.route('/slack', methods=['POST'])
+def generate_response():
+	form_info = flask.request.form
+	# First, parse args and find the restaurants
+	passed_args = form_info['text']
+	restaurants = get_restaurants_from_yelp(config.LOCATION)
+	# Next, create poll for people to vote on the restaurants
